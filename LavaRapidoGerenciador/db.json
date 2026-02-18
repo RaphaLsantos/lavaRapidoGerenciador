@@ -7,6 +7,10 @@
     {
       "id": "dd2d",
       "nome": "raphael"
+    },
+    {
+      "id": "589a",
+      "nome": "Clara"
     }
   ],
   "veiculos": [
@@ -51,6 +55,13 @@
       "placa": "021345",
       "cor": "Preto",
       "clienteId": "dd2d"
+    },
+    {
+      "id": "4417",
+      "modelo": "Onix",
+      "placa": "12345678",
+      "cor": "Cinza",
+      "clienteId": "589a"
     }
   ],
   "servicos": [],
