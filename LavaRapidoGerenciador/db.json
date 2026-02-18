@@ -2,68 +2,61 @@
   "clientes": [
     {
       "id": "8f9e",
-      "nome": "oioiiii"
-    },
-    {
-      "id": "dd2d",
-      "nome": "raphael"
+      "nome": "Raphael Santos"
     },
     {
       "id": "589a",
-      "nome": "Clara"
+      "nome": "Clara Oliveira"
     }
   ],
   "veiculos": [
     {
-      "id": "f6cd",
-      "modelo": "",
-      "placa": "",
-      "cor": "",
-      "clienteId": null
-    },
-    {
-      "id": "260d",
-      "modelo": "",
-      "placa": "",
-      "cor": "",
-      "clienteId": null
-    },
-    {
-      "id": "552a",
-      "modelo": "",
-      "placa": "",
-      "cor": "",
-      "clienteId": "99ef"
-    },
-    {
-      "id": "fe93",
-      "modelo": "",
-      "placa": "",
-      "cor": "",
-      "clienteId": null
-    },
-    {
-      "id": "54c2",
-      "modelo": "",
-      "placa": "",
-      "cor": "",
-      "clienteId": null
-    },
-    {
       "id": "4da4",
       "modelo": "Corsa",
-      "placa": "021345",
+      "placa": "ABC-1234",
       "cor": "Preto",
-      "clienteId": "dd2d"
+      "clienteId": "8f9e"
     },
     {
       "id": "4417",
       "modelo": "Onix",
-      "placa": "12345678",
+      "placa": "XYZ-5678",
       "cor": "Cinza",
       "clienteId": "589a"
     }
   ],
-  "servicos": [],
-  "pagamentos": []
+  "servicos": [
+    {
+      "id": "s1",
+      "descricao": "Lavagem Completa",
+      "valor": 80,
+      "veiculoId": "4da4",
+      "status": "Finalizado",
+      "dataCriacao": "2026-02-10T10:00:00.000Z"
+    },
+    {
+      "id": "s2",
+      "descricao": "Polimento",
+      "valor": 150,
+      "veiculoId": "4417",
+      "status": "Em andamento",
+      "dataCriacao": "2026-02-18T09:00:00.000Z"
+    }
+  ],
+  "pagamentos": [
+    {
+      "id": "p1",
+      "servicoId": "s1",
+      "valorPago": 80,
+      "formaPagamento": "PIX",
+      "data": "2026-02-10T10:30:00.000Z"
+    },
+    {
+      "id": "p2",
+      "servicoId": "s2",
+      "valorPago": 50,
+      "formaPagamento": "Dinheiro",
+      "data": "2026-02-18T09:15:00.000Z"
+    }
+  ]
 }

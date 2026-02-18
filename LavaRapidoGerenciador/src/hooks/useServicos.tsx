@@ -1,36 +1,74 @@
-import { useState } from "react";
-import axios from "axios";
-import type { Servico } from "../types/Servico";
-
-const API_URL = "http://localhost:3000/servicos";
+import { useState, useCallback } from "react";
+import { api } from "../services/api";
+import type { Servico, StatusServico } from "../types/Servico";
 
 export function useServicos() {
     const [servicos, setServicos] = useState<Servico[]>([]);
+    const [loading, setLoading] = useState(false);
 
-    async function buscarPorVeiculo(veiculoId: number) {
-        const response = await axios.get(`${API_URL}?veiculoId=${veiculoId}`);
-        setServicos(response.data);
-    }
+    const buscarTodosServicos = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await api.get<Servico[]>("/servicos");
+            setServicos(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar serviços:", error);
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
-    async function adicionarServico(servico: Servico) {
-        await axios.post(API_URL, servico);
-        buscarPorVeiculo(servico.veiculoId);
-    }
+    const buscarPorVeiculo = useCallback(async (veiculoId: string | number) => {
+        setLoading(true);
+        try {
+            const response = await api.get<Servico[]>(`/servicos?veiculoId=${veiculoId}`);
+            setServicos(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar serviços por veículo:", error);
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
-    async function marcarComoPago(id: number, servico: Servico) {
-        await axios.put(`${API_URL}/${id}`, {
-            ...servico,
-            pago: true
-        });
+    const adicionarServico = async (servico: Omit<Servico, "id">) => {
+        try {
+            const novoServico = {
+                ...servico,
+                status: "Em andamento" as StatusServico,
+                dataCriacao: new Date().toISOString()
+            };
+            const response = await api.post<Servico>("/servicos", novoServico);
+            setServicos((prev) => [...prev, response.data]);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao adicionar serviço:", error);
+            throw error;
+        }
+    };
 
-        buscarPorVeiculo(servico.veiculoId);
-    }
-
+    const atualizarStatus = async (id: string | number, status: StatusServico) => {
+        try {
+            const response = await api.patch<Servico>(`/servicos/${id}`, { status });
+            setServicos((prev) => 
+                prev.map((s) => (s.id === id ? response.data : s))
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao atualizar status do serviço:", error);
+            throw error;
+        }
+    };
 
     return {
         servicos,
+        loading,
+        buscarTodosServicos,
         buscarPorVeiculo,
         adicionarServico,
-        marcarComoPago
+        atualizarStatus
     };
-}      
+}

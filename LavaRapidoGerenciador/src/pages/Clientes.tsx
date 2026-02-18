@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Cliente } from "../types/Cliente";
 import { useClientes } from "../hooks/UseClientes";
 import { useVeiculos } from "../hooks/UseVeiculos";
+import Servicos from "./Servicos";
 
 export default function Clientes() {
   const [nome, setNome] = useState("");
@@ -119,8 +120,9 @@ export default function Clientes() {
 
           <ul>
             {veiculos.map((v) => (
-              <li key={v.id}>
-                {v.modelo} - {v.placa}
+              <li key={v.id} style={{ marginBottom: '30px' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '18px' }}>{v.modelo} - {v.placa} ({v.cor})</div>
+                <Servicos veiculoId={v.id!} />
               </li>
             ))}
           </ul>

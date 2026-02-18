@@ -1,7 +1,10 @@
+export type StatusServico = "Em andamento" | "Finalizado";
+
 export interface Servico {
-    id?: number;
+    id?: string | number;
     descricao: string;
     valor: number;
-    pago: boolean;
-    veiculoId: number;
+    veiculoId: string | number;
+    status: StatusServico;
+    dataCriacao: string; // ISO string
 }

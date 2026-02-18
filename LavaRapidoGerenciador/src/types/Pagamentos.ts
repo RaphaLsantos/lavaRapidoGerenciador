@@ -1,7 +1,9 @@
+export type FormaPagamento = "PIX" | "Dinheiro" | "Cartão";
+
 export interface Pagamento {
-  id?: number;
-  servicoId: number;
+  id?: string | number;
+  servicoId: string | number;
   valorPago: number;
-  forma: "PIX" | "Dinheiro" | "Cartão";
-  data: string;
+  formaPagamento: FormaPagamento;
+  data: string; // ISO string
 }
