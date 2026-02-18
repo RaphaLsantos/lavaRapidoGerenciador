@@ -1,0 +1,58 @@
+{
+  "clientes": [
+    {
+      "id": "8f9e",
+      "nome": "oioiiii"
+    },
+    {
+      "id": "dd2d",
+      "nome": "raphael"
+    }
+  ],
+  "veiculos": [
+    {
+      "id": "f6cd",
+      "modelo": "",
+      "placa": "",
+      "cor": "",
+      "clienteId": null
+    },
+    {
+      "id": "260d",
+      "modelo": "",
+      "placa": "",
+      "cor": "",
+      "clienteId": null
+    },
+    {
+      "id": "552a",
+      "modelo": "",
+      "placa": "",
+      "cor": "",
+      "clienteId": "99ef"
+    },
+    {
+      "id": "fe93",
+      "modelo": "",
+      "placa": "",
+      "cor": "",
+      "clienteId": null
+    },
+    {
+      "id": "54c2",
+      "modelo": "",
+      "placa": "",
+      "cor": "",
+      "clienteId": null
+    },
+    {
+      "id": "4da4",
+      "modelo": "Corsa",
+      "placa": "021345",
+      "cor": "Preto",
+      "clienteId": "dd2d"
+    }
+  ],
+  "servicos": [],
+  "pagamentos": []
+}
