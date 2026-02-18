@@ -1,29 +1,21 @@
 {
   "clientes": [
-    {
-      "id": "8f9e",
-      "nome": "Raphael Santos"
-    },
-    {
-      "id": "589a",
-      "nome": "Clara Oliveira"
-    }
+    { "id": "8f9e", "nome": "Raphael Santos", "email": "rapha@email.com", "telefone": "(11) 99999-9999" },
+    { "id": "589a", "nome": "Clara Oliveira", "email": "clara@email.com", "telefone": "(11) 88888-8888" }
   ],
   "veiculos": [
-    {
-      "id": "4da4",
-      "modelo": "Corsa",
-      "placa": "ABC-1234",
-      "cor": "Preto",
-      "clienteId": "8f9e"
-    },
-    {
-      "id": "4417",
-      "modelo": "Onix",
-      "placa": "XYZ-5678",
-      "cor": "Cinza",
-      "clienteId": "589a"
-    }
+    { "id": "4da4", "modelo": "Corsa", "placa": "ABC-1234", "cor": "Preto", "clienteId": "8f9e" },
+    { "id": "4417", "modelo": "Onix", "placa": "XYZ-5678", "cor": "Cinza", "clienteId": "589a" }
+  ],
+  "precosServicos": [
+    { "id": 1, "nome": "Lavagem Simples", "preco": 50, "categoria": "Lavagem" },
+    { "id": 2, "nome": "Lavagem Completa", "preco": 80, "categoria": "Lavagem" },
+    { "id": 3, "nome": "Polimento Cristalizado", "preco": 250, "categoria": "Estética" },
+    { "id": 4, "nome": "Higienização Interna", "preco": 150, "categoria": "Estética" }
+  ],
+  "funcionarios": [
+    { "id": 1, "nome": "João Silva", "cargo": "Lavador", "comissaoPercentual": 10 },
+    { "id": 2, "nome": "Maria Souza", "cargo": "Especialista Estética", "comissaoPercentual": 15 }
   ],
   "servicos": [
     {
@@ -32,31 +24,21 @@
       "valor": 80,
       "veiculoId": "4da4",
       "status": "Finalizado",
-      "dataCriacao": "2026-02-10T10:00:00.000Z"
-    },
-    {
-      "id": "s2",
-      "descricao": "Polimento",
-      "valor": 150,
-      "veiculoId": "4417",
-      "status": "Em andamento",
-      "dataCriacao": "2026-02-18T09:00:00.000Z"
+      "dataCriacao": "2026-02-10T10:00:00.000Z",
+      "funcionarioId": 1
     }
   ],
   "pagamentos": [
-    {
-      "id": "p1",
-      "servicoId": "s1",
-      "valorPago": 80,
-      "formaPagamento": "PIX",
-      "data": "2026-02-10T10:30:00.000Z"
-    },
-    {
-      "id": "p2",
-      "servicoId": "s2",
-      "valorPago": 50,
-      "formaPagamento": "Dinheiro",
-      "data": "2026-02-18T09:15:00.000Z"
-    }
+    { "id": "p1", "servicoId": "s1", "valorPago": 80, "formaPagamento": "PIX", "data": "2026-02-10T10:30:00.000Z" }
+  ],
+  "agendamentos": [
+    { "id": 1, "clienteId": "8f9e", "veiculoId": "4da4", "servicoTipoId": 2, "dataHora": "2026-02-20T14:00:00.000Z", "status": "Confirmado" }
+  ],
+  "despesas": [
+    { "id": 1, "descricao": "Aluguel Fevereiro", "valor": 2000, "categoria": "Aluguel", "data": "2026-02-05T08:00:00.000Z" },
+    { "id": 2, "descricao": "Shampoo Automotivo", "valor": 150, "categoria": "Produtos", "data": "2026-02-12T15:00:00.000Z" }
+  ],
+  "comissoes": [
+    { "id": 1, "funcionarioId": 1, "servicoId": "s1", "valor": 8, "data": "2026-02-10T10:30:00.000Z" }
   ]
 }

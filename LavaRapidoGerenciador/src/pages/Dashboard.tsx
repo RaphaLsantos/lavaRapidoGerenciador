@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useServicos } from "../hooks/useServicos";
 import { usePagamentos } from "../hooks/usePagamentos";
+import { useSaaS } from "../hooks/useSaaS";
 import { api } from "../services/api";
 import {
     BarChart,
@@ -17,11 +18,13 @@ import type { Servico } from "../types/Servico";
 export default function Dashboard() {
     const { buscarTodosServicos } = useServicos();
     const { buscarTodosPagamentos } = usePagamentos();
+    const { buscarDespesas } = useSaaS();
     
     const [clientesCount, setClientesCount] = useState(0);
     const [veiculosCount, setVeiculosCount] = useState(0);
     const [servicos, setServicos] = useState<Servico[]>([]);
     const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
+    const [despesas, setDespesas] = useState<any[]>([]);
     
     // Filtro de Mês/Ano
     const [mesSelecionado, setMesSelecionado] = useState(new Date().getMonth());
@@ -29,15 +32,17 @@ export default function Dashboard() {
 
     useEffect(() => {
         async function carregarDados() {
-            const [s, p, c, v] = await Promise.all([
+            const [s, p, c, v, d] = await Promise.all([
                 buscarTodosServicos(),
                 buscarTodosPagamentos(),
                 api.get("/clientes"),
-                api.get("/veiculos")
+                api.get("/veiculos"),
+                buscarDespesas()
             ]);
 
             setServicos(s);
             setPagamentos(p);
+            setDespesas(d);
             setClientesCount(c.data.length);
             setVeiculosCount(v.data.length);
         }
@@ -58,6 +63,15 @@ export default function Dashboard() {
         });
 
         const totalFaturado = pagamentosNoMes.reduce((acc, p) => acc + p.valorPago, 0);
+        
+        const totalDespesas = despesas
+            .filter(d => {
+                const data = new Date(d.data);
+                return data.getMonth() === mesSelecionado && data.getFullYear() === anoSelecionado;
+            })
+            .reduce((acc, d) => acc + d.valor, 0);
+
+        const lucroLiquido = totalFaturado - totalDespesas;
         
         // Total pendente: Valor total dos serviços finalizados no mês - total pago por esses serviços
         const totalPendente = servicosNoMes
@@ -94,6 +108,8 @@ export default function Dashboard() {
             totalFaturado,
             totalPendente,
             totalHoje,
+            totalDespesas,
+            lucroLiquido,
             dadosGrafico
         };
     }, [pagamentos, servicos, mesSelecionado, anoSelecionado]);
@@ -129,6 +145,8 @@ export default function Dashboard() {
                 <Card title="Faturado no Mês" value={`R$ ${dadosFiltrados.totalFaturado.toFixed(2)}`} color="#4caf50" />
                 <Card title="Pendente no Mês" value={`R$ ${dadosFiltrados.totalPendente.toFixed(2)}`} color="#f44336" />
                 <Card title="Recebido Hoje" value={`R$ ${dadosFiltrados.totalHoje.toFixed(2)}`} color="#2196f3" />
+                <Card title="Despesas Mês" value={`R$ ${dadosFiltrados.totalDespesas.toFixed(2)}`} color="#ff9800" />
+                <Card title="Lucro Líquido" value={`R$ ${dadosFiltrados.lucroLiquido.toFixed(2)}`} color={dadosFiltrados.lucroLiquido >= 0 ? "#4caf50" : "#f44336"} />
             </div>
 
             <h2>Fluxo de Caixa (Mensal)</h2>

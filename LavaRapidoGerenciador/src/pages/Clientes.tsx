@@ -3,6 +3,7 @@ import type { Cliente } from "../types/Cliente";
 import { useClientes } from "../hooks/UseClientes";
 import { useVeiculos } from "../hooks/UseVeiculos";
 import Servicos from "./Servicos";
+import HistoricoCliente from "./HistoricoCliente";
 
 export default function Clientes() {
   const [nome, setNome] = useState("");
@@ -72,6 +73,7 @@ export default function Clientes() {
             <button onClick={() => selecionarCliente(cliente.id!)}>
               Ver veículos
             </button>
+            <HistoricoCliente clienteId={cliente.id!} />
           </li>
 
         ))}
