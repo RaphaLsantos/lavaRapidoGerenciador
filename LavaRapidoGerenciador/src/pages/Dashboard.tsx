@@ -150,7 +150,7 @@ export default function Dashboard() {
             </div>
 
             <h2>Fluxo de Caixa (Mensal)</h2>
-            <div style={{ width: "100%", height: 300, backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '8px' }}>
+            <div style={{ width: "100%", height: 300, backgroundColor: '#ffffff', padding: '10px', borderRadius: '8px' }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={dadosFiltrados.dadosGrafico}>
                         <CartesianGrid strokeDasharray="3 3" />

@@ -15,7 +15,7 @@ export default function TabelaPrecos() {
             <h1>Tabela de Preços (SaaS)</h1>
             <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
                 <thead>
-                    <tr style={{ backgroundColor: '#f4f4f4', textAlign: 'left' }}>
+                    <tr style={{ backgroundColor: '#ffffff', textAlign: 'left' }}>
                         <th style={{ padding: '12px', borderBottom: '2px solid #ddd' }}>Serviço</th>
                         <th style={{ padding: '12px', borderBottom: '2px solid #ddd' }}>Categoria</th>
                         <th style={{ padding: '12px', borderBottom: '2px solid #ddd' }}>Preço</th>

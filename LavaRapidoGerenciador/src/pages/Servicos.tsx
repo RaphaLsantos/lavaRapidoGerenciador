@@ -84,7 +84,7 @@ export default function Servicos({ veiculoId }: ServicosProps) {
                     const quitado = totalPago >= s.valor && s.status === "Finalizado";
                     
                     return (
-                        <li key={s.id} style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#f9f9f9', borderRadius: '5px' }}>
+                        <li key={s.id} style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#ffffff', borderRadius: '5px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <strong>{s.descricao} - R$ {s.valor.toFixed(2)}</strong>
                                 <span style={{ 
