@@ -5,6 +5,14 @@
       "nome": "raphael da silva",
       "email": "clara@email.com",
       "telefone": "(11) 88888-8888"
+    },
+    {
+      "id": "9826",
+      "nome": "Maria"
+    },
+    {
+      "id": "7415",
+      "nome": "gi"
     }
   ],
   "veiculos": [
@@ -28,29 +36,43 @@
       "placa": "123456789",
       "cor": "preto",
       "clienteId": "589a"
+    },
+    {
+      "id": "7289",
+      "modelo": "Celta",
+      "placa": "12345678",
+      "cor": "Branco",
+      "clienteId": "9826"
+    },
+    {
+      "id": "e343",
+      "modelo": "carro",
+      "placa": "12",
+      "cor": "Preto",
+      "clienteId": "7415"
     }
   ],
   "precosServicos": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Lavagem Simples",
       "preco": 50,
       "categoria": "Lavagem"
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Lavagem Completa",
       "preco": 80,
       "categoria": "Lavagem"
     },
     {
-      "id": 3,
+      "id": "3",
       "nome": "Polimento Cristalizado",
       "preco": 250,
       "categoria": "Estética"
     },
     {
-      "id": 4,
+      "id": "4",
       "nome": "Higienização Interna",
       "preco": 150,
       "categoria": "Estética"
@@ -58,13 +80,13 @@
   ],
   "funcionarios": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "João Silva",
       "cargo": "Lavador",
       "comissaoPercentual": 10
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Maria Souza",
       "cargo": "Especialista Estética",
       "comissaoPercentual": 15
@@ -95,6 +117,14 @@
       "veiculoId": "c525",
       "status": "Em andamento",
       "dataCriacao": "2026-02-18T22:52:50.358Z"
+    },
+    {
+      "id": "0d8b",
+      "descricao": "Banho",
+      "valor": 80,
+      "veiculoId": "e343",
+      "status": "Em andamento",
+      "dataCriacao": "2026-02-24T01:07:59.998Z"
     }
   ],
   "pagamentos": [
@@ -115,7 +145,7 @@
   ],
   "agendamentos": [
     {
-      "id": 1,
+      "id": "1",
       "clienteId": null,
       "veiculoId": "4da4",
       "servicoTipoId": 2,
@@ -125,14 +155,14 @@
   ],
   "despesas": [
     {
-      "id": 1,
+      "id": "1",
       "descricao": "Aluguel Fevereiro",
       "valor": 2000,
       "categoria": "Aluguel",
       "data": "2026-02-05T08:00:00.000Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "descricao": "Shampoo Automotivo",
       "valor": 150,
       "categoria": "Produtos",
@@ -141,7 +171,7 @@
   ],
   "comissoes": [
     {
-      "id": 1,
+      "id": "1",
       "funcionarioId": 1,
       "servicoId": "s1",
       "valor": 8,

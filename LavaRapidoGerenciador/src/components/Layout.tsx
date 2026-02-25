@@ -43,5 +43,6 @@ const linkStyle = {
     transition: 'background 0.3s',
     textAlign: 'center' as const,
     fontSize: '18px',
+
 };
 
