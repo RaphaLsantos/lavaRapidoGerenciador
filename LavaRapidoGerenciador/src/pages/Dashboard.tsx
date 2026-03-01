@@ -19,13 +19,13 @@ export default function Dashboard() {
     const { buscarTodosServicos } = useServicos();
     const { buscarTodosPagamentos } = usePagamentos();
     const { buscarDespesas } = useSaaS();
-    
+
     const [clientesCount, setClientesCount] = useState(0);
     const [veiculosCount, setVeiculosCount] = useState(0);
     const [servicos, setServicos] = useState<Servico[]>([]);
     const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
     const [despesas, setDespesas] = useState<any[]>([]);
-    
+
     // Filtro de Mês/Ano
     const [mesSelecionado, setMesSelecionado] = useState(new Date().getMonth());
     const [anoSelecionado, setAnoSelecionado] = useState(new Date().getFullYear());
@@ -63,7 +63,7 @@ export default function Dashboard() {
         });
 
         const totalFaturado = pagamentosNoMes.reduce((acc, p) => acc + p.valorPago, 0);
-        
+
         const totalDespesas = despesas
             .filter(d => {
                 const data = new Date(d.data);
@@ -72,7 +72,7 @@ export default function Dashboard() {
             .reduce((acc, d) => acc + d.valor, 0);
 
         const lucroLiquido = totalFaturado - totalDespesas;
-        
+
         // Total pendente: Valor total dos serviços finalizados no mês - total pago por esses serviços
         const totalPendente = servicosNoMes
             .filter(s => s.status === "Finalizado")
@@ -99,9 +99,9 @@ export default function Dashboard() {
         const hoje = new Date();
         const totalHoje = pagamentos.filter(p => {
             const d = new Date(p.data);
-            return d.getDate() === hoje.getDate() && 
-                   d.getMonth() === hoje.getMonth() && 
-                   d.getFullYear() === hoje.getFullYear();
+            return d.getDate() === hoje.getDate() &&
+                d.getMonth() === hoje.getMonth() &&
+                d.getFullYear() === hoje.getFullYear();
         }).reduce((acc, p) => acc + p.valorPago, 0);
 
         return {
@@ -120,27 +120,30 @@ export default function Dashboard() {
     ];
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>Dashboard Profissional</h1>
+        <div className="flex flex-col gap-4">
 
-            <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-                <select 
-                    value={mesSelecionado} 
-                    onChange={(e) => setMesSelecionado(Number(e.target.value))}
-                >
-                    {meses.map((mes, index) => (
-                        <option key={mes} value={index}>{mes}</option>
-                    ))}
-                </select>
-                <input 
-                    type="number" 
-                    value={anoSelecionado} 
-                    onChange={(e) => setAnoSelecionado(Number(e.target.value))}
-                />
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold">Dashboard Profissional</h1>
+                <div className="flex items-center gap-4 md:flex-row md:items-start md:gap-2">
+                    <select className="bg-blue-400 font-bold text-white p-1 rounded cursor-pointer hover:bg-blue-600 transition-colors duration-200 wd-40 text-center"
+                        value={mesSelecionado}
+                        onChange={(e) => setMesSelecionado(Number(e.target.value))}
+                    >
+                        {meses.map((mes, index) => (
+                            <option key={mes} value={index}>{mes}</option>
+                        ))}
+                    </select>
+                    <input className="wd-100 bg-blue-400 font-bold text-white p-1 rounded cursor-pointer hover:bg-blue-600 transition-colors duration-200 text-center "type="number" 
+                        type="number"
+                        value={anoSelecionado}
+                        onChange={(e) => setAnoSelecionado(Number(e.target.value))}
+                    />
+                </div>
+
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-                <Card title="Total Clientes" value={clientesCount} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10 mt-15">
+                <Card title="Total Clientes" value={clientesCount} /> 
                 <Card title="Total Veículos" value={veiculosCount} />
                 <Card title="Faturado no Mês" value={`R$ ${dadosFiltrados.totalFaturado.toFixed(2)}`} color="#4caf50" />
                 <Card title="Pendente no Mês" value={`R$ ${dadosFiltrados.totalPendente.toFixed(2)}`} color="#f44336" />
@@ -167,15 +170,18 @@ export default function Dashboard() {
 
 function Card({ title, value, color = '#333' }: { title: string, value: string | number, color?: string }) {
     return (
-        <div style={{ 
-            padding: '20px', 
-            borderRadius: '8px', 
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)', 
-            backgroundColor: '#fff',
-            borderLeft: `5px solid ${color}`
+        <div style={{
+            padding: '20px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            backgroundColor: '#1E90FF',
+            borderLeft: `5px solid ${color}`,
+            width: '100%',
+            textAlign: 'center',
+
         }}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666' }}>{title}</h3>
-            <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: color }}>{value}</p>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '15px', color: '#ffffff' }}>{title}</h3>
+            <p style={{ margin: 0, fontSize: '35px', fontWeight: 'bold', color: '#ffffff',  }}>{value}</p>
         </div>
     );
 }
