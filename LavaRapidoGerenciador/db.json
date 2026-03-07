@@ -13,6 +13,14 @@
     {
       "id": "7415",
       "nome": "gi"
+    },
+    {
+      "id": "4e2a",
+      "nome": "duda"
+    },
+    {
+      "id": "e704",
+      "nome": "gu"
     }
   ],
   "veiculos": [
@@ -50,6 +58,13 @@
       "placa": "12",
       "cor": "Preto",
       "clienteId": "7415"
+    },
+    {
+      "id": "16c8",
+      "modelo": "d",
+      "placa": "123",
+      "cor": "12",
+      "clienteId": "4e2a"
     }
   ],
   "precosServicos": [
@@ -125,6 +140,14 @@
       "veiculoId": "e343",
       "status": "Em andamento",
       "dataCriacao": "2026-02-24T01:07:59.998Z"
+    },
+    {
+      "id": "f589",
+      "descricao": "Lavagem",
+      "valor": 80,
+      "veiculoId": "16c8",
+      "status": "Em andamento",
+      "dataCriacao": "2026-03-07T14:33:44.776Z"
     }
   ],
   "pagamentos": [
@@ -177,5 +200,6 @@
       "valor": 8,
       "data": "2026-02-10T10:30:00.000Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

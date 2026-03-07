@@ -122,7 +122,7 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col gap-4">
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-10">
                 <h1 className="text-2xl font-bold">Dashboard Profissional</h1>
                 <div className="flex items-center gap-4 md:flex-row md:items-start md:gap-2">
                     <select className="bg-blue-400 font-bold text-white p-1 rounded cursor-pointer hover:bg-blue-600 transition-colors duration-200 wd-40 text-center"
@@ -133,7 +133,7 @@ export default function Dashboard() {
                             <option key={mes} value={index}>{mes}</option>
                         ))}
                     </select>
-                    <input className="wd-100 bg-blue-400 font-bold text-white p-1 rounded cursor-pointer hover:bg-blue-600 transition-colors duration-200 text-center "type="number" 
+                    <input className="wd-100 bg-blue-400 font-bold text-white p-1 rounded cursor-pointer hover:bg-blue-600 transition-colors duration-200 text-center "
                         type="number"
                         value={anoSelecionado}
                         onChange={(e) => setAnoSelecionado(Number(e.target.value))}
@@ -143,16 +143,16 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10 mt-15">
-                <Card title="Total Clientes" value={clientesCount} /> 
-                <Card title="Total Veículos" value={veiculosCount} />
-                <Card title="Faturado no Mês" value={`R$ ${dadosFiltrados.totalFaturado.toFixed(2)}`} color="#4caf50" />
-                <Card title="Pendente no Mês" value={`R$ ${dadosFiltrados.totalPendente.toFixed(2)}`} color="#f44336" />
-                <Card title="Recebido Hoje" value={`R$ ${dadosFiltrados.totalHoje.toFixed(2)}`} color="#2196f3" />
-                <Card title="Despesas Mês" value={`R$ ${dadosFiltrados.totalDespesas.toFixed(2)}`} color="#ff9800" />
-                <Card title="Lucro Líquido" value={`R$ ${dadosFiltrados.lucroLiquido.toFixed(2)}`} color={dadosFiltrados.lucroLiquido >= 0 ? "#4caf50" : "#f44336"} />
+                <Card title="Total Clientes" value={clientesCount} iconClass="fa-user" /> 
+                <Card title="Total Veículos" value={veiculosCount} iconClass="fa-car" />
+                <Card title="Faturado no Mês" value={`R$ ${dadosFiltrados.totalFaturado.toFixed(2)}`} color="#4caf50" iconClass="fa-up-long" />
+                <Card title="Pendente no Mês" value={`R$ ${dadosFiltrados.totalPendente.toFixed(2)}`} color="#f44336" iconClass="fa-down-long" />
+                <Card title="Recebido Hoje" value={`R$ ${dadosFiltrados.totalHoje.toFixed(2)}`} color="#ff0000" iconClass="fa-coins" />
+                <Card title="Despesas Mês" value={`R$ ${dadosFiltrados.totalDespesas.toFixed(2)}`} color="#ff9800" iconClass="fa-money-bill" />
+                <Card title="Lucro Líquido" value={`R$ ${dadosFiltrados.lucroLiquido.toFixed(2)}`} color={dadosFiltrados.lucroLiquido >= 0 ? "#4caf50" : "#f44336"} iconClass="fa-chart-line" />
             </div>
 
-            <h2>Fluxo de Caixa (Mensal)</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Gráfico de Fluxo de Caixa (Mensal)</h2>
             <div style={{ width: "100%", height: 300, backgroundColor: '#ffffff', padding: '10px', borderRadius: '8px' }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={dadosFiltrados.dadosGrafico}>
@@ -168,20 +168,39 @@ export default function Dashboard() {
     );
 }
 
-function Card({ title, value, color = '#333' }: { title: string, value: string | number, color?: string }) {
-    return (
-        <div style={{
-            padding: '20px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            backgroundColor: '#1E90FF',
-            borderLeft: `5px solid ${color}`,
-            width: '100%',
-            textAlign: 'center',
+function Card({ title, value, color = '#333', iconClass }: { title: string, value: string | number, color?: string, iconClass?: string }) {
+    const [isHovered, setIsHovered] = useState(false);
 
-        }}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '15px', color: '#ffffff' }}>{title}</h3>
-            <p style={{ margin: 0, fontSize: '35px', fontWeight: 'bold', color: '#ffffff',  }}>{value}</p>
+    const textColor = isHovered ? '#1E1E1E' : '#ffffff';
+    const iconColor = isHovered ? '#1E1E1E' : '#ffffff';
+
+    return (
+        <div
+            className="hover:scale-105 transition-all duration-300"
+            style={{
+                padding: '20px',
+                borderRadius: '8px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                backgroundImage: 'linear-gradient(90deg, #4169E1 0%, #ffffff 100%)',
+                backgroundSize: '200% 100%',
+                backgroundPosition: isHovered ? '100% 0' : '0 0',
+                borderLeft: `5px solid ${color}`,
+                width: '100%',
+                textAlign: 'center',
+                color: textColor,
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '15px', color: textColor, fontWeight: 'bold' }}>{title}</h3>
+            {iconClass && (
+                <i
+                    className={`fa-solid ${iconClass}`}
+                    style={{ fontSize: 30, color: iconColor, marginBottom: 8, cursor: 'pointer', marginTop: '10px' }}
+                />
+            )}
+            <p style={{ margin: 0, fontSize: '35px', fontWeight: 'bold', color: textColor }}>{value}</p>
         </div>
     );
 }

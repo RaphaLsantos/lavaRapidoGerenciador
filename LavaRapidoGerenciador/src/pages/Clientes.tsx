@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { Cliente } from "../types/Cliente";
 import { useClientes } from "../hooks/UseClientes";
 import { useVeiculos } from "../hooks/UseVeiculos";
 import Servicos from "./Servicos";

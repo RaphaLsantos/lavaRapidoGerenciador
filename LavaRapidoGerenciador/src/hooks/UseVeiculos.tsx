@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "../services/api";
 import type { Veiculo} from "../types/Veiculo";
 

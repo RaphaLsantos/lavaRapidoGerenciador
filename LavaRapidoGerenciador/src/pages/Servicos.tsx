@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useServicos } from "../hooks/useServicos";
 import { usePagamentos } from "../hooks/usePagamentos";
-import type { Servico, StatusServico } from "../types/Servico";
 import type { Pagamento, FormaPagamento } from "../types/Pagamentos";
 
 interface ServicosProps {

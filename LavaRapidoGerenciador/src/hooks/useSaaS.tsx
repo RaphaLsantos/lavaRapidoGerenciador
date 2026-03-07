@@ -9,7 +9,7 @@ import type {
 } from "../types/SaaS";
 
 export function useSaaS() {
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
 
     // --- TABELA DE PREÇOS ---
     const buscarPrecos = useCallback(async () => {
