@@ -1,43 +1,80 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import "../index.css";
 
 export default function Layout() {
-    return (
-        <div style={{ display: 'flex', height: '100vh', }}>
-            <aside style={{
-                width: '100px',
-                backgroundColor: '#4169E1',
-                color: 'white',
-                padding: '20px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '30px',
-                height: '100vh',
-                borderRadius: '30px',
-                margin: '20px'
-            }}>
-                <h2 className="text-3xl font-bold text-white mb-6 tracking-tight cursor-pointer text-center hover:scale-120 transition-transform duration-200"><i className="fa-solid fa-bars text-white-500 "></i></h2>
-                <Link to="/dashboard" className={`${linkClasses} group`}><i className="fas fa-tachometer-alt group-hover:text-white"></i></Link>
-                <Link to="/clientes" className={`${linkClasses} group`}><i className="fas fa-users group-hover:text-white"></i></Link>
-                <Link to="/servicos-precos" className={`${linkClasses} group`}><i className="fas fa-tags group-hover:text-white"></i></Link>
+    const location = useLocation();
 
-                <div style={{fontSize: '12px', opacity: 0.7, textAlign: 'center', padding: '10px', color: '#ffffff', fontWeight: 'bold', marginTop: 'auto' }}>
-                    v1.0.0<br></br>SaaS
+    const menuItems = [
+        { path: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
+        { path: "/clientes", icon: "fas fa-users", label: "Clientes" },
+        { path: "/servicos-precos", icon: "fas fa-tags", label: "Serviços" },
+    ];
+
+    return (
+        <div className="flex h-screen bg-gray-50 overflow-hidden">
+            {/* Sidebar */}
+            <aside className="w-24 md:w-64 bg-indigo-700 text-white flex flex-col transition-all duration-300 ease-in-out shadow-2xl">
+                {/* Logo Section */}
+                <div className="p-6 flex items-center justify-center md:justify-start gap-3">
+                    <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg transform hover:rotate-12 transition-transform duration-300">
+                        <i className="fa-solid fa-car-wash text-indigo-700 text-xl"></i>
+                    </div>
+                    <span className="hidden md:block text-xl font-extrabold tracking-wider uppercase italic">Lava Jato</span>
                 </div>
-                <div className="text-center text-sm text-gray-300">
-                    <a href="#sair"><i className="fa-solid fa-arrow-right-from-bracket text-3xl text-white hover:scale-120 text-xl transition-transform duration-200"></i></a>
+
+                {/* Navigation Links */}
+                <nav className="flex-1 px-4 mt-6 space-y-4">
+                    {menuItems.map((item) => {
+                        const isActive = location.pathname === item.path;
+                        return (
+                            <Link
+                                key={item.path}
+                                to={item.path}
+                                className={`
+                                    flex items-center justify-center md:justify-start gap-4 p-3 rounded-2xl transition-all duration-300 group
+                                    ${isActive 
+                                        ? "bg-white text-indigo-700 shadow-lg scale-105" 
+                                        : "text-indigo-100 hover:bg-indigo-600 hover:text-white hover:translate-x-1"
+                                    }
+                                `}
+                            >
+                                <div className={`
+                                    w-10 h-10 flex items-center justify-center rounded-xl transition-colors duration-300
+                                    ${isActive ? "bg-indigo-50" : "bg-indigo-800 group-hover:bg-indigo-500"}
+                                `}>
+                                    <i className={`${item.icon} text-lg`}></i>
+                                </div>
+                                <span className="hidden md:block font-medium">{item.label}</span>
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                {/* Footer Section */}
+                <div className="p-6 mt-auto border-t border-indigo-600/50">
+                    <div className="hidden md:flex flex-col mb-6 p-3 bg-indigo-800/50 rounded-xl text-center">
+                        <span className="text-xs text-indigo-200 uppercase tracking-widest font-bold">Plano SaaS</span>
+                        <span className="text-sm font-semibold text-white">Versão 1.0.0</span>
+                    </div>
+                    
+                    <button 
+                        onClick={() => window.location.href = '#sair'}
+                        className="w-full flex items-center justify-center md:justify-start gap-4 p-3 rounded-2xl text-indigo-100 hover:bg-red-500 hover:text-white transition-all duration-300 group"
+                    >
+                        <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-indigo-800 group-hover:bg-red-400 transition-colors">
+                            <i className="fa-solid fa-arrow-right-from-bracket text-lg"></i>
+                        </div>
+                        <span className="hidden md:block font-medium">Sair</span>
+                    </button>
                 </div>
             </aside>
-            <main style={{ flex: 1, padding: '20px', backgroundColor: '#ffffff' }}>
-                <Outlet />
+
+            {/* Main Content */}
+            <main className="flex-1 relative overflow-y-auto focus:outline-none bg-white md:rounded-l-[40px] shadow-inner">
+                <div className="py-6 px-4 sm:px-6 md:px-8">
+                    <Outlet />
+                </div>
             </main>
         </div>
     );
 }
-
-// base styles for sidebar links; hover handled by Tailwind classes
-const linkClasses =
-    "text-[white] p-2 rounded bg-white/10 text-center text-xl " +
-    "transition-colors duration-300 hover:bg-white/20 hover:scale-110 hover:text-white transition-transform duration-200";
-
-
