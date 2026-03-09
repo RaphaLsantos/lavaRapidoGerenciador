@@ -25,7 +25,7 @@ export interface Despesa {
     id: string | number;
     descricao: string;
     valor: number;
-    categoria: "Aluguel" | "Produtos" | "Salários" | "Outros";
+    categoria: "Aluguel" | "Produtos" | "Salários" | "Energia" | "Manutenção" | "Outros";
     data: string;
 }
 

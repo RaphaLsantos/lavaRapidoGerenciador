@@ -1,4 +1,4 @@
-export type StatusServico = "Em andamento" | "Finalizado";
+export type StatusServico = "Agendado" | "Em andamento" | "Finalizado" | "Cancelado";
 
 export interface Servico {
     id?: string | number;
@@ -7,4 +7,7 @@ export interface Servico {
     veiculoId: string | number;
     status: StatusServico;
     dataCriacao: string; // ISO string
+    dataFinalizacao?: string; // ISO string
+    funcionarioId?: string | number;
+    notas?: string;
 }

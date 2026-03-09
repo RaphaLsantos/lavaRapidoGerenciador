@@ -8,6 +8,8 @@ export default function Layout() {
         { path: "/dashboard", icon: "fas fa-chart-line", label: "Dashboard" },
         { path: "/clientes", icon: "fas fa-user-friends", label: "Clientes" },
         { path: "/servicos-precos", icon: "fas fa-clipboard-list", label: "Serviços" },
+        { path: "/agendamentos", icon: "fas fa-calendar-check", label: "Agendamentos" },
+        { path: "/despesas", icon: "fas fa-money-bill-wave", label: "Despesas" },
     ];
 
     return (
