@@ -3,10 +3,14 @@ import { useClientes } from "../hooks/UseClientes";
 import { useVeiculos } from "../hooks/UseVeiculos";
 import Servicos from "./Servicos";
 import HistoricoCliente from "./HistoricoCliente";
+import Modal from "../components/Modal";
 
 export default function Clientes() {
   const [nome, setNome] = useState("");
   const [clienteSelecionado, setClienteSelecionado] = useState<number | null>(null);
+  const [isVeiculosModalOpen, setIsVeiculosModalOpen] = useState(false);
+  const [clienteModalInfo, setClienteModalInfo] = useState<any>(null);
+
   const {
     clientes,
     clienteEditando,
@@ -18,14 +22,14 @@ export default function Clientes() {
   const {
     veiculos,
     buscarPorCliente,
-    adicionarVeiculo
+    adicionarVeiculo,
+    deletarVeiculo
   } = useVeiculos();
 
   const [modelo, setModelo] = useState("");
   const [placa, setPlaca] = useState("");
   const [cor, setCor] = useState("");
 
-  // 👇 SINCRONIZA O INPUT QUANDO ENTRA EM MODO EDIÇÃO
   useEffect(() => {
     if (clienteEditando) {
       setNome(clienteEditando.nome);
@@ -34,9 +38,35 @@ export default function Clientes() {
     }
   }, [clienteEditando]);
 
-  function selecionarCliente(id: number) {
-    setClienteSelecionado(id);
-    buscarPorCliente(id);
+  function abrirModalVeiculos(cliente: any) {
+    setClienteModalInfo(cliente);
+    setClienteSelecionado(cliente.id);
+    buscarPorCliente(cliente.id);
+    setIsVeiculosModalOpen(true);
+  }
+
+  function fecharModalVeiculos() {
+    setIsVeiculosModalOpen(false);
+    setClienteModalInfo(null);
+    setModelo("");
+    setPlaca("");
+    setCor("");
+  }
+
+  function adicionarNovoVeiculo() {
+    if (!clienteSelecionado || !modelo || !placa || !cor) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+    adicionarVeiculo({
+      modelo,
+      placa,
+      cor,
+      clienteId: clienteSelecionado
+    });
+    setModelo("");
+    setPlaca("");
+    setCor("");
   }
 
   return (
@@ -91,7 +121,7 @@ export default function Clientes() {
                     <i className="fa-solid fa-pen-to-square mr-2"></i>Editar
                   </button>
                   <button 
-                    onClick={() => selecionarCliente(cliente.id!)}
+                    onClick={() => abrirModalVeiculos(cliente)}
                     className="px-4 py-2 bg-blue-400 text-white font-semibold rounded-lg hover:bg-blue-500 transition-colors duration-200"
                   >
                     <i className="fa-solid fa-car mr-2"></i>Veículos
@@ -114,47 +144,42 @@ export default function Clientes() {
         )}
       </div>
 
-      {/* Seção de Veículos */}
-      {clienteSelecionado && (
-        <div className="bg-white rounded-2xl shadow-md border border-blue-100 p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Veículos do Cliente</h2>
-
+      {/* Modal de Veículos */}
+      <Modal 
+        isOpen={isVeiculosModalOpen}
+        onClose={fecharModalVeiculos}
+        title={`Veículos de ${clienteModalInfo?.nome || 'Cliente'}`}
+        size="xl"
+      >
+        <div className="space-y-6">
           {/* Formulário de Adição de Veículo */}
-          <div className="bg-blue-50 rounded-xl p-4 mb-6 border border-blue-200">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Adicionar Novo Veículo</h3>
+          <div className="bg-gradient-to-r from-blue-50 to-white rounded-xl p-6 border-2 border-blue-200">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">
+              <i className="fa-solid fa-plus text-blue-400 mr-2"></i>
+              Adicionar Novo Veículo
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <input
-                placeholder="Modelo"
+                placeholder="Modelo (ex: Corolla)"
                 value={modelo}
                 onChange={(e) => setModelo(e.target.value)}
-                className="px-4 py-2 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none"
+                className="px-4 py-3 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none transition-colors"
               />
               <input
-                placeholder="Placa"
+                placeholder="Placa (ex: ABC-1234)"
                 value={placa}
                 onChange={(e) => setPlaca(e.target.value)}
-                className="px-4 py-2 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none"
+                className="px-4 py-3 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none transition-colors"
               />
               <input
-                placeholder="Cor"
+                placeholder="Cor (ex: Preto)"
                 value={cor}
                 onChange={(e) => setCor(e.target.value)}
-                className="px-4 py-2 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none"
+                className="px-4 py-3 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none transition-colors"
               />
               <button
-                onClick={() => {
-                  if (!clienteSelecionado) return;
-                  adicionarVeiculo({
-                    modelo,
-                    placa,
-                    cor,
-                    clienteId: clienteSelecionado
-                  });
-                  setModelo("");
-                  setPlaca("");
-                  setCor("");
-                }}
-                className="px-4 py-2 bg-blue-400 text-white font-bold rounded-lg hover:bg-blue-500 transition-colors"
+                onClick={adicionarNovoVeiculo}
+                className="px-4 py-3 bg-gradient-to-r from-blue-400 to-blue-500 text-white font-bold rounded-lg hover:from-blue-500 hover:to-blue-600 transition-all duration-200 shadow-md"
               >
                 <i className="fa-solid fa-plus mr-2"></i>Adicionar
               </button>
@@ -164,28 +189,48 @@ export default function Clientes() {
           {/* Lista de Veículos */}
           <div className="space-y-4">
             {veiculos.length === 0 ? (
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 text-center">
-                <p className="text-gray-600 font-semibold">Nenhum veículo cadastrado</p>
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-8 text-center">
+                <i className="fa-solid fa-car text-4xl text-blue-300 mb-3 block"></i>
+                <p className="text-gray-600 font-semibold">Nenhum veículo cadastrado para este cliente</p>
               </div>
             ) : (
               veiculos.map((v) => (
-                <div key={v.id} className="bg-gradient-to-r from-blue-50 to-white rounded-xl border border-blue-100 p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <i className="fa-solid fa-car text-3xl text-blue-400"></i>
-                    <div>
-                      <h4 className="text-xl font-bold text-gray-900">{v.modelo}</h4>
-                      <p className="text-sm text-gray-600">
-                        <span className="font-semibold">Placa:</span> {v.placa} | <span className="font-semibold">Cor:</span> {v.cor}
-                      </p>
+                <div key={v.id} className="bg-gradient-to-r from-blue-50 to-white rounded-xl border-2 border-blue-100 p-6 hover:shadow-lg transition-all duration-200">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                        <i className="fa-solid fa-car text-2xl text-white"></i>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-xl font-bold text-gray-900">{v.modelo}</h4>
+                        <div className="mt-2 space-y-1 text-sm text-gray-600">
+                          <p><span className="font-semibold text-gray-900">Placa:</span> {v.placa}</p>
+                          <p><span className="font-semibold text-gray-900">Cor:</span> {v.cor}</p>
+                        </div>
+                      </div>
                     </div>
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Deseja excluir o veículo ${v.modelo}?`)) {
+                          deletarVeiculo(v.id!);
+                        }
+                      }}
+                      className="px-3 py-2 bg-red-400 text-white font-semibold rounded-lg hover:bg-red-500 transition-colors duration-200 text-sm"
+                    >
+                      <i className="fa-solid fa-trash mr-1"></i>Excluir
+                    </button>
                   </div>
-                  <Servicos veiculoId={v.id!} />
+
+                  {/* Serviços do Veículo */}
+                  <div className="mt-4 pt-4 border-t-2 border-blue-100">
+                    <Servicos veiculoId={v.id!} />
+                  </div>
                 </div>
               ))
             )}
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }

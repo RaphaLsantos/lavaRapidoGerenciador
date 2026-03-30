@@ -101,7 +101,7 @@ export default function Agendamentos() {
                         className="px-4 py-3 border-2 border-blue-200 rounded-lg focus:border-blue-400 focus:outline-none"
                     >
                         <option value="">Selecione Veículo</option>
-                        {veiculos.filter(v => v.clienteId === clienteId).map(v => (
+                        {veiculos.filter(v => String(v.clienteId) === String(clienteId)).map(v => (
                             <option key={v.id} value={v.id}>{v.modelo} - {v.placa}</option>
                         ))}
                     </select>
