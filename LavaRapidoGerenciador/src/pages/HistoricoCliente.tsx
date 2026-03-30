@@ -11,7 +11,8 @@ export default function HistoricoCliente({ clienteId }: HistoricoProps) {
     const [historico, setHistorico] = useState<Servico[]>([]);
 
     useEffect(() => {
-        buscarHistoricoCliente(clienteId).then(setHistorico);
+        const hist = buscarHistoricoCliente(clienteId);
+        setHistorico(hist);
     }, [clienteId, buscarHistoricoCliente]);
 
     return (

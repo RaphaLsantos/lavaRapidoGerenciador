@@ -19,8 +19,9 @@ export default function Agendamentos() {
 
     useEffect(() => {
         buscarTodos();
-        buscarPrecos().then(setPrecos);
-    }, []);
+        const precos = buscarPrecos();
+        setPrecos(precos);
+    }, [buscarTodos, buscarPrecos]);
 
     const handleAdicionarAgendamento = async () => {
         if (!clienteId || !veiculoId || !servicoTipoId) {

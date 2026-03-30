@@ -3,7 +3,7 @@ import { useServicos } from "../hooks/useServicos";
 import { usePagamentos } from "../hooks/usePagamentos";
 import { useSaaS } from "../hooks/useSaaS";
 import { useDespesas } from "../hooks/useDespesas";
-import { api } from "../services/api";
+import { getStorageData } from "../services/localStorage";
 import {
     BarChart,
     Bar,
@@ -37,25 +37,18 @@ export default function Dashboard() {
     const [anoSelecionado, setAnoSelecionado] = useState(new Date().getFullYear());
 
     useEffect(() => {
-        async function carregarDados() {
-            const [s, p, c, v, d, pr] = await Promise.all([
-                buscarTodosServicos(),
-                buscarTodosPagamentos(),
-                api.get("/clientes"),
-                api.get("/veiculos"),
-                buscarDespesasAPI(),
-                buscarPrecos()
-            ]);
+        const data = getStorageData();
+        const s = buscarTodosServicos();
+        const p = buscarTodosPagamentos();
+        const d = buscarDespesasAPI();
+        const pr = buscarPrecos();
 
-            setServicos(s);
-            setPagamentos(p);
-            setDespesas(d);
-            setPrecos(pr);
-            setClientesCount(c.data.length);
-            setVeiculosCount(v.data.length);
-        }
-
-        carregarDados();
+        setServicos(s);
+        setPagamentos(p);
+        setDespesas(d);
+        setPrecos(pr);
+        setClientesCount(data.clientes.length);
+        setVeiculosCount(data.veiculos.length);
     }, [buscarTodosServicos, buscarTodosPagamentos, buscarDespesasAPI, buscarPrecos]);
 
     // Lógica de Filtro e Cálculos

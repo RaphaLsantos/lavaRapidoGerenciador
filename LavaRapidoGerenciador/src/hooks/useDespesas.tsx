@@ -1,53 +1,40 @@
 import { useState, useCallback } from "react";
-import { api } from "../services/api";
+import { getStorageData } from "../services/localStorage";
 import type { Despesa } from "../types/SaaS";
 
 export function useDespesas() {
     const [despesas, setDespesas] = useState<Despesa[]>([]);
 
-    const buscarTodas = useCallback(async () => {
-        try {
-            const response = await api.get("/despesas");
-            setDespesas(response.data);
-            return response.data;
-        } catch (error) {
-            console.error("Erro ao buscar despesas:", error);
-            return [];
-        }
+    const buscarTodas = useCallback(() => {
+        const data = getStorageData();
+        setDespesas(data.despesas);
+        return data.despesas;
     }, []);
 
-    const buscarPorMes = useCallback(async (mes: number, ano: number) => {
-        try {
-            const response = await api.get("/despesas");
-            const filtradas = response.data.filter((d: Despesa) => {
-                const data = new Date(d.data);
-                return data.getMonth() === mes && data.getFullYear() === ano;
-            });
-            return filtradas;
-        } catch (error) {
-            console.error("Erro ao buscar despesas por mês:", error);
-            return [];
-        }
+    const buscarPorMes = useCallback((mes: number, ano: number) => {
+        const data = getStorageData();
+        const filtradas = data.despesas.filter((d: Despesa) => {
+            const dataObj = new Date(d.data);
+            return dataObj.getMonth() === mes && dataObj.getFullYear() === ano;
+        });
+        return filtradas;
     }, []);
 
-    const adicionarDespesa = useCallback(async (despesa: Omit<Despesa, "id">) => {
-        try {
-            const response = await api.post("/despesas", despesa);
-            setDespesas([...despesas, response.data]);
-            return response.data;
-        } catch (error) {
-            console.error("Erro ao adicionar despesa:", error);
-        }
-    }, [despesas]);
+    const adicionarDespesa = useCallback((despesa: Omit<Despesa, "id">) => {
+        const data = getStorageData();
+        const newDespesa = { ...despesa, id: Date.now() } as Despesa;
+        data.despesas.push(newDespesa);
+        localStorage.setItem('lava-rapido-data', JSON.stringify(data));
+        setDespesas(data.despesas);
+        return newDespesa;
+    }, []);
 
-    const deletarDespesa = useCallback(async (id: string | number) => {
-        try {
-            await api.delete(`/despesas/${id}`);
-            setDespesas(despesas.filter(d => d.id !== id));
-        } catch (error) {
-            console.error("Erro ao deletar despesa:", error);
-        }
-    }, [despesas]);
+    const deletarDespesa = useCallback((id: string | number) => {
+        const data = getStorageData();
+        data.despesas = data.despesas.filter(d => d.id !== id);
+        localStorage.setItem('lava-rapido-data', JSON.stringify(data));
+        setDespesas(data.despesas);
+    }, []);
 
     const calcularTotalDespesas = useCallback((despesasArray: Despesa[]) => {
         return despesasArray.reduce((acc, d) => acc + d.valor, 0);

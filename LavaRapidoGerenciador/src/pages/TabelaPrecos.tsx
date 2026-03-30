@@ -7,7 +7,8 @@ export default function TabelaPrecos() {
     const [precos, setPrecos] = useState<PrecoServico[]>([]);
 
     useEffect(() => {
-        buscarPrecos().then(setPrecos);
+        const precos = buscarPrecos();
+        setPrecos(precos);
     }, [buscarPrecos]);
 
     // Agrupar preços por categoria

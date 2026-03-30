@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { api } from "../services/api";
+import { getStorageData } from "../services/localStorage";
 import type { 
     PrecoServico, 
     Funcionario, 
@@ -12,52 +12,48 @@ export function useSaaS() {
     const [loading] = useState(false);
 
     // --- TABELA DE PREÇOS ---
-    const buscarPrecos = useCallback(async () => {
-        const response = await api.get<PrecoServico[]>("/precosServicos");
-        return response.data;
+    const buscarPrecos = useCallback(() => {
+        const data = getStorageData();
+        return data.precosServicos;
     }, []);
 
     // --- FUNCIONÁRIOS E COMISSÕES ---
-    const buscarFuncionarios = useCallback(async () => {
-        const response = await api.get<Funcionario[]>("/funcionarios");
-        return response.data;
+    const buscarFuncionarios = useCallback(() => {
+        return [];
     }, []);
 
-    const registrarComissao = async (comissao: Omit<Comissao, "id">) => {
-        await api.post("/comissoes", comissao);
+    const registrarComissao = (comissao: Omit<Comissao, "id">) => {
+        // Placeholder para comissões
     };
 
     // --- AGENDAMENTOS ---
-    const buscarAgendamentos = useCallback(async () => {
-        const response = await api.get<Agendamento[]>("/agendamentos");
-        return response.data;
+    const buscarAgendamentos = useCallback(() => {
+        const data = getStorageData();
+        return data.agendamentos;
     }, []);
 
-    const criarAgendamento = async (agendamento: Omit<Agendamento, "id">) => {
-        const response = await api.post<Agendamento>("/agendamentos", agendamento);
-        return response.data;
+    const criarAgendamento = (agendamento: Omit<Agendamento, "id">) => {
+        // Placeholder para agendamentos
+        return {} as Agendamento;
     };
 
     // --- DESPESAS ---
-    const buscarDespesas = useCallback(async () => {
-        const response = await api.get<Despesa[]>("/despesas");
-        return response.data;
+    const buscarDespesas = useCallback(() => {
+        const data = getStorageData();
+        return data.despesas;
     }, []);
 
-    const adicionarDespesa = async (despesa: Omit<Despesa, "id">) => {
-        const response = await api.post<Despesa>("/despesas", despesa);
-        return response.data;
+    const adicionarDespesa = (despesa: Omit<Despesa, "id">) => {
+        // Placeholder para despesas
+        return {} as Despesa;
     };
 
     // --- HISTÓRICO DO CLIENTE ---
-    const buscarHistoricoCliente = useCallback(async (clienteId: string | number) => {
-        // Busca serviços vinculados aos veículos do cliente
-        const veiculos = await api.get(`/veiculos?clienteId=${clienteId}`);
-        const idsVeiculos = veiculos.data.map((v: any) => v.id);
-        
-        const servicos = await api.get("/servicos");
-        const historico = servicos.data.filter((s: any) => idsVeiculos.includes(s.veiculoId));
-        
+    const buscarHistoricoCliente = useCallback((clienteId: string | number) => {
+        const data = getStorageData();
+        const veiculos = data.veiculos.filter(v => v.clienteId === clienteId || String(v.clienteId) === String(clienteId));
+        const idsVeiculos = veiculos.map((v: any) => v.id);
+        const historico = data.servicos.filter((s: any) => idsVeiculos.includes(s.veiculoId));
         return historico;
     }, []);
 
