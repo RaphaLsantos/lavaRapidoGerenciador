@@ -224,7 +224,7 @@ export default function Dashboard() {
                                 <YAxis stroke="#6B7280" />
                                 <Tooltip 
                                     contentStyle={{ backgroundColor: '#F3F4F6', border: '2px solid #93C5FD', borderRadius: '8px' }}
-                                    formatter={(value) => `R$ ${value.toFixed(2)}`}
+                                    formatter={(value) => `R$ ${typeof value === 'number' ? value.toFixed(2) : value}`}
                                 />
                                 <Bar dataKey="valor" fill="#60A5FA" radius={[8, 8, 0, 0]} name="Valor Recebido" />
                             </BarChart>

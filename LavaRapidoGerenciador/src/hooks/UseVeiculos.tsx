@@ -17,9 +17,15 @@ export function useVeiculos(){
         setVeiculos(prev => [...prev, response.data]);
     }
 
+    async function deletarVeiculo(id: number){
+        await api.delete(`/veiculos/${id}`);
+        setVeiculos(prev => prev.filter(v => v.id !== id));
+    }
+
     return{
         veiculos,
         buscarPorCliente,
-        adicionarVeiculo
+        adicionarVeiculo,
+        deletarVeiculo
     };
 }

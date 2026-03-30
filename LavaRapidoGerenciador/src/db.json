@@ -1,0 +1,292 @@
+{
+  "clientes": [
+    {
+      "id": "589a",
+      "nome": "Raphael da Silva",
+      "email": "raphael@email.com",
+      "telefone": "(11) 98888-8888"
+    },
+    {
+      "id": "9826",
+      "nome": "Maria Santos"
+    },
+    {
+      "id": "7415",
+      "nome": "Giordana Costa"
+    },
+    {
+      "id": "4e2a",
+      "nome": "Eduardo Oliveira"
+    },
+    {
+      "id": "e704",
+      "nome": "Gustavo Ferreira"
+    }
+  ],
+  "veiculos": [
+    {
+      "id": "4da4",
+      "modelo": "Corsa",
+      "placa": "ABC-1234",
+      "cor": "Preto",
+      "clienteId": "589a"
+    },
+    {
+      "id": "4417",
+      "modelo": "Onix",
+      "placa": "XYZ-5678",
+      "cor": "Cinza",
+      "clienteId": "589a"
+    },
+    {
+      "id": "c525",
+      "modelo": "Corsa",
+      "placa": "DEF-5678",
+      "cor": "Preto",
+      "clienteId": "589a"
+    },
+    {
+      "id": "7289",
+      "modelo": "Celta",
+      "placa": "GHI-9012",
+      "cor": "Branco",
+      "clienteId": "9826"
+    },
+    {
+      "id": "e343",
+      "modelo": "Gol",
+      "placa": "JKL-3456",
+      "cor": "Preto",
+      "clienteId": "7415"
+    },
+    {
+      "id": "16c8",
+      "modelo": "Uno",
+      "placa": "MNO-7890",
+      "cor": "Branco",
+      "clienteId": "4e2a"
+    }
+  ],
+  "precosServicos": [
+    {
+      "id": "1",
+      "nome": "Lavagem Simples",
+      "preco": 50,
+      "categoria": "Lavagem"
+    },
+    {
+      "id": "2",
+      "nome": "Lavagem Completa",
+      "preco": 80,
+      "categoria": "Lavagem"
+    },
+    {
+      "id": "3",
+      "nome": "Polimento Cristalizado",
+      "preco": 250,
+      "categoria": "Estética"
+    },
+    {
+      "id": "4",
+      "nome": "Higienização Interna",
+      "preco": 150,
+      "categoria": "Estética"
+    },
+    {
+      "id": "5",
+      "nome": "Enceramento",
+      "preco": 120,
+      "categoria": "Estética"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": "1",
+      "nome": "João Silva",
+      "cargo": "Lavador",
+      "comissaoPercentual": 10
+    },
+    {
+      "id": "2",
+      "nome": "Maria Souza",
+      "cargo": "Especialista Estética",
+      "comissaoPercentual": 15
+    },
+    {
+      "id": "3",
+      "nome": "Carlos Mendes",
+      "cargo": "Operador",
+      "comissaoPercentual": 8
+    }
+  ],
+  "servicos": [
+    {
+      "id": "s1",
+      "descricao": "Lavagem Completa",
+      "valor": 80,
+      "veiculoId": "4da4",
+      "status": "Finalizado",
+      "dataCriacao": "2026-03-08T10:00:00.000Z",
+      "dataFinalizacao": "2026-03-08T11:30:00.000Z",
+      "funcionarioId": "1",
+      "notas": "Serviço realizado com sucesso"
+    },
+    {
+      "id": "s2",
+      "descricao": "Lavagem Simples",
+      "valor": 50,
+      "veiculoId": "4417",
+      "status": "Finalizado",
+      "dataCriacao": "2026-03-08T12:00:00.000Z",
+      "dataFinalizacao": "2026-03-08T12:45:00.000Z",
+      "funcionarioId": "1"
+    },
+    {
+      "id": "s3",
+      "descricao": "Polimento Cristalizado",
+      "valor": 250,
+      "veiculoId": "c525",
+      "status": "Em andamento",
+      "dataCriacao": "2026-03-09T09:00:00.000Z",
+      "funcionarioId": "2"
+    },
+    {
+      "id": "s4",
+      "descricao": "Higienização Interna",
+      "valor": 150,
+      "veiculoId": "7289",
+      "status": "Agendado",
+      "dataCriacao": "2026-03-09T14:00:00.000Z",
+      "funcionarioId": "3"
+    },
+    {
+      "id": "s5",
+      "descricao": "Enceramento",
+      "valor": 120,
+      "veiculoId": "e343",
+      "status": "Em andamento",
+      "dataCriacao": "2026-03-09T10:30:00.000Z",
+      "funcionarioId": "2"
+    },
+    {
+      "id": "s6",
+      "descricao": "Lavagem Completa",
+      "valor": 80,
+      "veiculoId": "16c8",
+      "status": "Finalizado",
+      "dataCriacao": "2026-03-07T14:00:00.000Z",
+      "dataFinalizacao": "2026-03-07T15:15:00.000Z",
+      "funcionarioId": "1"
+    }
+  ],
+  "pagamentos": [
+    {
+      "id": "p1",
+      "servicoId": "s1",
+      "valorPago": 80,
+      "formaPagamento": "PIX",
+      "data": "2026-03-08T11:30:00.000Z"
+    },
+    {
+      "id": "p2",
+      "servicoId": "s2",
+      "valorPago": 50,
+      "formaPagamento": "Dinheiro",
+      "data": "2026-03-08T12:45:00.000Z"
+    },
+    {
+      "id": "p3",
+      "servicoId": "s6",
+      "valorPago": 80,
+      "formaPagamento": "Cartão",
+      "data": "2026-03-07T15:15:00.000Z"
+    }
+  ],
+  "agendamentos": [
+    {
+      "id": "1",
+      "clienteId": "9826",
+      "veiculoId": "7289",
+      "servicoTipoId": "2",
+      "dataHora": "2026-03-09T14:00:00.000Z",
+      "status": "Confirmado"
+    },
+    {
+      "id": "2",
+      "clienteId": "7415",
+      "veiculoId": "e343",
+      "servicoTipoId": "1",
+      "dataHora": "2026-03-10T10:00:00.000Z",
+      "status": "Confirmado"
+    },
+    {
+      "id": "3",
+      "clienteId": "4e2a",
+      "veiculoId": "16c8",
+      "servicoTipoId": "4",
+      "dataHora": "2026-03-11T15:30:00.000Z",
+      "status": "Pendente"
+    }
+  ],
+  "despesas": [
+    {
+      "id": "1",
+      "descricao": "Aluguel Março",
+      "valor": 2000,
+      "categoria": "Aluguel",
+      "data": "2026-03-01T08:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "descricao": "Shampoo Automotivo 5L",
+      "valor": 150,
+      "categoria": "Produtos",
+      "data": "2026-03-05T15:00:00.000Z"
+    },
+    {
+      "id": "3",
+      "descricao": "Energia Elétrica",
+      "valor": 350,
+      "categoria": "Energia",
+      "data": "2026-03-08T10:00:00.000Z"
+    },
+    {
+      "id": "4",
+      "descricao": "Manutenção Compressor",
+      "valor": 200,
+      "categoria": "Manutenção",
+      "data": "2026-03-06T12:00:00.000Z"
+    },
+    {
+      "id": "5",
+      "descricao": "Cera Automotiva",
+      "valor": 120,
+      "categoria": "Produtos",
+      "data": "2026-03-07T14:00:00.000Z"
+    }
+  ],
+  "comissoes": [
+    {
+      "id": "1",
+      "funcionarioId": "1",
+      "servicoId": "s1",
+      "valor": 8,
+      "data": "2026-03-08T11:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "funcionarioId": "1",
+      "servicoId": "s2",
+      "valor": 5,
+      "data": "2026-03-08T12:45:00.000Z"
+    },
+    {
+      "id": "3",
+      "funcionarioId": "2",
+      "servicoId": "s3",
+      "valor": 37.5,
+      "data": "2026-03-09T14:00:00.000Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
