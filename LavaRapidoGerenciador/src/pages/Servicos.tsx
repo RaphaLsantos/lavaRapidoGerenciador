@@ -20,7 +20,7 @@ export default function Servicos({ veiculoId }: ServicosProps) {
         const todosPagamentos = await buscarTodosPagamentos();
         
         const map: Record<string | number, Pagamento[]> = {};
-        todosPagamentos.forEach(p => {
+        todosPagamentos.forEach((p: Pagamento) => {
             if (!map[p.servicoId]) map[p.servicoId] = [];
             map[p.servicoId].push(p);
         });

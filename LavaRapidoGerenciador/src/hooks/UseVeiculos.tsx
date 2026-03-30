@@ -1,28 +1,36 @@
 import { useState } from "react";
-import { api } from "../services/api";
-import type { Veiculo} from "../types/Veiculo";
+import type { Veiculo } from "../types/Veiculo";
+import { getStorageData, saveStorageData, getNextId } from "../services/localStorage";
 
-export function useVeiculos(){
+export function useVeiculos() {
     const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
 
-    async function buscarPorCliente(clienteId: number){
-        const response = await api.get<Veiculo[]>(
-            `/veiculos?clienteId=${clienteId}`)
-            ;
-        setVeiculos(response.data);
+    function buscarPorCliente(clienteId: number) {
+        const data = getStorageData();
+        const veiculosCliente = data.veiculos.filter(v => v.clienteId === clienteId);
+        setVeiculos(veiculosCliente);
     }
 
-    async function adicionarVeiculo(veiculo: Veiculo){
-        const response = await api.post("/veiculos", veiculo);
-        setVeiculos(prev => [...prev, response.data]);
+    function adicionarVeiculo(veiculo: Veiculo) {
+        const data = getStorageData();
+        const novoVeiculo: Veiculo = {
+            ...veiculo,
+            id: getNextId(data.veiculos)
+        };
+        data.veiculos.push(novoVeiculo);
+        setVeiculos(prev => [...prev, novoVeiculo]);
+        saveStorageData(data);
     }
 
-    async function deletarVeiculo(id: number){
-        await api.delete(`/veiculos/${id}`);
+    function deletarVeiculo(id: number) {
+        const data = getStorageData();
+        data.veiculos = data.veiculos.filter(v => v.id !== id);
+        data.servicos = data.servicos.filter(s => s.veiculoId !== id);
         setVeiculos(prev => prev.filter(v => v.id !== id));
+        saveStorageData(data);
     }
 
-    return{
+    return {
         veiculos,
         buscarPorCliente,
         adicionarVeiculo,

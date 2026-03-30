@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { api } from "../services/api";
 import type { Cliente } from "../types/Cliente";
+import { getStorageData, saveStorageData, getNextId } from "../services/localStorage";
 
 export function useClientes() {
     const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -10,51 +10,54 @@ export function useClientes() {
         buscarClientes();
     }, []);
 
-    async function buscarClientes() {
-        const response = await api.get<Cliente[]>("/clientes");
-        setClientes(response.data);
+    function buscarClientes() {
+        const data = getStorageData();
+        setClientes(data.clientes);
     }
 
-    async function salvarCliente(nome: string) {
+    function salvarCliente(nome: string) {
         if (!nome) return;
 
+        const data = getStorageData();
+
         if (clienteEditando) {
-            await api.put(`/clientes/${clienteEditando.id}`, {
-                ...clienteEditando,
-                nome
-            });
-
-            setClientes(clientes.map(c =>
-                c.id === clienteEditando.id
-                    ? { ...c, nome }
-                    : c
-            ));
-
-            setClienteEditando(null);
-
+            // Modo edição
+            const index = data.clientes.findIndex(c => c.id === clienteEditando.id);
+            if (index !== -1) {
+                data.clientes[index] = { ...data.clientes[index], nome };
+                setClientes([...data.clientes]);
+                setClienteEditando(null);
+            }
         } else {
-            // MODO CRIAÇÃO
-            const response = await api.post("/clientes", { nome });
-            setClientes([...clientes, response.data]);
+            // Modo criação
+            const novoCliente: Cliente = {
+                id: getNextId(data.clientes),
+                nome
+            };
+            data.clientes.push(novoCliente);
+            setClientes([...data.clientes]);
         }
+
+        saveStorageData(data);
     }
 
-    async function deletarCliente(id: number) {
-      await api.delete(`/clientes/${id}`);
-      setClientes(clientes.filter(c => c.id !== id));
+    function deletarCliente(id: number) {
+        const data = getStorageData();
+        data.clientes = data.clientes.filter(c => c.id !== id);
+        data.veiculos = data.veiculos.filter(v => v.clienteId !== id);
+        setClientes(data.clientes);
+        saveStorageData(data);
     }
 
-    function iniciarEdicao(cliente: Cliente){
+    function iniciarEdicao(cliente: Cliente) {
         setClienteEditando(cliente);
     }
 
-    return{
+    return {
         clientes,
         clienteEditando,
         salvarCliente,
         deletarCliente,
         iniciarEdicao
     };
-
-    
 }
