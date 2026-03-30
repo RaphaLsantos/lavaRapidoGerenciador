@@ -5,22 +5,6 @@
       "nome": "Raphael da Silva",
       "email": "raphael@email.com",
       "telefone": "(11) 98888-8888"
-    },
-    {
-      "id": "9826",
-      "nome": "Maria Santos"
-    },
-    {
-      "id": "7415",
-      "nome": "Giordana Costa"
-    },
-    {
-      "id": "4e2a",
-      "nome": "Eduardo Oliveira"
-    },
-    {
-      "id": "e704",
-      "nome": "Gustavo Ferreira"
     }
   ],
   "veiculos": [
@@ -39,32 +23,25 @@
       "clienteId": "589a"
     },
     {
-      "id": "c525",
-      "modelo": "Corsa",
-      "placa": "DEF-5678",
-      "cor": "Preto",
-      "clienteId": "589a"
-    },
-    {
       "id": "7289",
       "modelo": "Celta",
       "placa": "GHI-9012",
       "cor": "Branco",
-      "clienteId": "9826"
+      "clienteId": null
     },
     {
       "id": "e343",
       "modelo": "Gol",
       "placa": "JKL-3456",
       "cor": "Preto",
-      "clienteId": "7415"
+      "clienteId": null
     },
     {
       "id": "16c8",
       "modelo": "Uno",
       "placa": "MNO-7890",
       "cor": "Branco",
-      "clienteId": "4e2a"
+      "clienteId": null
     }
   ],
   "precosServicos": [
@@ -145,7 +122,7 @@
       "id": "s3",
       "descricao": "Polimento Cristalizado",
       "valor": 250,
-      "veiculoId": "c525",
+      "veiculoId": null,
       "status": "Em andamento",
       "dataCriacao": "2026-03-09T09:00:00.000Z",
       "funcionarioId": "2"
@@ -205,7 +182,7 @@
   "agendamentos": [
     {
       "id": "1",
-      "clienteId": "9826",
+      "clienteId": null,
       "veiculoId": "7289",
       "servicoTipoId": "2",
       "dataHora": "2026-03-09T14:00:00.000Z",
@@ -213,7 +190,7 @@
     },
     {
       "id": "2",
-      "clienteId": "7415",
+      "clienteId": null,
       "veiculoId": "e343",
       "servicoTipoId": "1",
       "dataHora": "2026-03-10T10:00:00.000Z",
@@ -221,7 +198,7 @@
     },
     {
       "id": "3",
-      "clienteId": "4e2a",
+      "clienteId": null,
       "veiculoId": "16c8",
       "servicoTipoId": "4",
       "dataHora": "2026-03-11T15:30:00.000Z",
@@ -235,13 +212,6 @@
       "valor": 2000,
       "categoria": "Aluguel",
       "data": "2026-03-01T08:00:00.000Z"
-    },
-    {
-      "id": "2",
-      "descricao": "Shampoo Automotivo 5L",
-      "valor": 150,
-      "categoria": "Produtos",
-      "data": "2026-03-05T15:00:00.000Z"
     },
     {
       "id": "3",
